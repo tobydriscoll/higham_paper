@@ -12,7 +12,7 @@ include("preprocessors.jl")
 
 preprocess! = standardize!
 opt = ADAM()
-modelgen = baremodel
+modelgen = dropmodel
 #loss(x,y) = crossentropy(model(x),y)
 function loss(x, y)
     ŷ = model(x)
@@ -20,7 +20,7 @@ function loss(x, y)
     z = crossentropy(ŷ, y)
     return isnan(z) ? convert(typeof(z),16) : z
 end
-description = "baremodel_standardized_ADAM_crossentropy"
+description = "dropmodel_standardized_ADAM_crossentropy"
 hypparam = @dict description preprocess! opt modelgen loss
 
 ###
