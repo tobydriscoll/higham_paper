@@ -33,11 +33,17 @@ end
 function whitening(X)
 	numobs = size(X,ndims(X))
 	Y = reshape(X,:,numobs)
-	U,σ,Vt = svd(Y)
-	Ut = transpose(U)
+	μ = mean(Y,dims=2)
+	Y .-= μ
+	#U,σ,Vt = svd(Y)
+	#σ /= sqrt(numobs)
+	λ,U = eigen(cov(Y'))
+	W = Diagonal(1 ./sqrt.(λ))*transpose(U)
+
 	return function(X)
-		Y = Ut*reshape(X,:,size(X,ndims(X)))
-		Y ./= σ
+		#Y = Ut*(reshape(X,:,size(X,ndims(X))) .- μ)
+		#Y ./= σ
+		Y = W*(reshape(X,:,size(X,ndims(X))) .- μ)
 		X[:] .= Y[:]
 	end
 end	

@@ -16,7 +16,7 @@ train_x,train_y = CIFAR10.traindata(Float32);
 
 ## 
 # hyperparameters
-preprocess! = whitening(train_x[:,:,:,40001:50000])
+preprocess! = whitening(train_x)
 opt = ADAM()
 modelgen = dropmodel
 #loss(x,y) = crossentropy(model(x),y)
@@ -26,7 +26,7 @@ function loss(x, y)
     z = crossentropy(ŷ, y)
     return isnan(z) ? convert(typeof(z),16) : z
 end
-description = "dropmodel_standardized_ADAM_crossentropy"
+description = "dropmodel_whitened_ADAM_crossentropy"
 hypparam = @dict description preprocess! opt modelgen loss
 
 ##
@@ -50,7 +50,7 @@ cback() = @show(progress())
 ###
 # train
 Flux.testmode!(model,false)   # enable dropout
-Flux.@epochs 20 Flux.train!(loss,params(model),data,opt,cb=throttle(cback,5))
+Flux.@epochs 40 Flux.train!(loss,params(model),data,opt,cb=throttle(cback,5))
 Flux.testmode!(model,true)    # disable dropout
 
 ###
