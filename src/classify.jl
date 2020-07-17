@@ -10,7 +10,13 @@ using MLDatasets,MLBase
 include("models.jl")
 include("preprocessors.jl")
 
-preprocess! = standardize!
+###
+# Grab training and test data
+train_x,train_y = CIFAR10.traindata(Float32);
+
+## 
+# hyperparameters
+preprocess! = whitening(train_x[:,:,:,40001:50000])
 opt = ADAM()
 modelgen = dropmodel
 #loss(x,y) = crossentropy(model(x),y)
@@ -23,9 +29,7 @@ end
 description = "dropmodel_standardized_ADAM_crossentropy"
 hypparam = @dict description preprocess! opt modelgen loss
 
-###
-# Grab training and test data
-train_x,train_y = CIFAR10.traindata(Float32);
+##
 preprocess!(train_x)
 
 train_hot = onehotbatch(train_y,0:9);
