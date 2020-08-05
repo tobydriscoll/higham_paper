@@ -1,0 +1,35 @@
+apiKey: dcd0e10112e5db6f9b3336668e27f3
+artifactDirectory: null
+clusterId: null
+command: "python helloworld.py"
+container: tensorflow/serving:latest-gpu
+containerUser: null
+experimentEnv: null
+ignoreFiles: null
+isPreemptible: false
+machineType: GV100
+modelPath: null
+modelType: null
+name: CIFAR
+no-logs: true
+ports: 8888:8888
+projectId: prlufwnqu
+registryPassword: null
+registryUrl: null
+registryUsername: null
+tag: null
+tags: null
+tensorboard: true
+tensorboard_set: null
+workingDirectory: null
+workspace: .
+datasetUri:
+  - "https://s3.us-east-2.wasabisys.com"
+datasetName:
+  - "tear-film-summer-2020"
+datasetAwsAccessKeyId:
+  - LX8O4O7O3P9V116RUC3Y
+datasetAwsSecretAccessKey:
+  - Lu5Ss0LAkwrzzn10loZjhHn6z5HqUgaezRKaCo7F
+datasetVersionId: null
+datasetEtag: null
